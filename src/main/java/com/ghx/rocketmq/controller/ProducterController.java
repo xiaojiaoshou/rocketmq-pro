@@ -32,6 +32,9 @@ public class ProducterController {
 
     /**
      * 发送字符串
+     *
+     * %RETRY%消费组名称 重投队列
+     * %DLQ%消费组名称  死信队列
      * @param message
      * @return
      */
