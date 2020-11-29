@@ -154,4 +154,28 @@ public class ProducterController {
     }
 
 
+    /**
+     * 发送字符串
+     *
+     * %RETRY%消费组名称 重投队列
+     * %DLQ%消费组名称  死信队列
+     * @param message
+     * @return
+     */
+    @RequestMapping(value = "/sendtest")
+    public String sendtest(String message) {
+        int count = 0;
+        for (int i = 0; i < 5000; i++) {
+            count++;
+            // Send string
+            SendResult sendResult = rocketMQTemplate.syncSend(mqPropertiesConfig.getSpringTopic(), message);
+            System.out.printf("syncSend1 to topic %s sendResult=%s %n", mqPropertiesConfig.getSpringTopic(), sendResult);
+        }
+
+        System.out.println("生产端消息发送完成,总共发送消息数量count=" + count);
+
+        return "生产端消息发送完成,总共发送消息数量count=" + count;
+    }
+
+
 }

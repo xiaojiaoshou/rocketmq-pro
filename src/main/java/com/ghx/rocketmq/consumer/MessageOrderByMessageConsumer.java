@@ -39,7 +39,7 @@ public class MessageOrderByMessageConsumer implements RocketMQListener<MessageEx
         if (messageStr.contains("8")) {
             System.out.println("抛出异常的消息,该分区后的消息不会再消费  " + messageStr);
 
-            throw new RuntimeException("故意抛出异常");
+           // throw new RuntimeException("故意抛出异常");
         }
 
     }
