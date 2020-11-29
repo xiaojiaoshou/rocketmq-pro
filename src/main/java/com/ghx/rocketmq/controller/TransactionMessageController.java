@@ -35,7 +35,7 @@ public class TransactionMessageController {
 
     @RequestMapping("/transaction")
     private void testExtRocketMQTemplateTransaction() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             try {
                 Message msg = MessageBuilder.withPayload("extRocketMQTemplate transactional message " + i).
                         setHeader(RocketMQHeaders.TRANSACTION_ID, "KEY_" + i).build();
@@ -64,7 +64,7 @@ public class TransactionMessageController {
             System.out.printf("#### executeLocalTransaction is executed, msgTransactionId=%s %n",
                     transId);
             int value = transactionIndex.getAndIncrement();
-            int status = value % 2;
+            int status = value % 3;
             localTrans.put(transId, status);
             if (status == 0) {
                 // Return local transaction with success(commit), in this case,
@@ -86,6 +86,7 @@ public class TransactionMessageController {
 
         @Override
         public RocketMQLocalTransactionState checkLocalTransaction(Message msg) {
+            // 超过15次的回查事务状态失败后，默认是丢弃此消息
             String transId = (String) msg.getHeaders().get(RocketMQHeaders.TRANSACTION_ID);
             RocketMQLocalTransactionState retState = RocketMQLocalTransactionState.COMMIT;
             Integer status = localTrans.get(transId);
