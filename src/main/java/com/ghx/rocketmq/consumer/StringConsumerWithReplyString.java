@@ -25,12 +25,12 @@ import org.springframework.stereotype.Service;
  * The consumer that replying String
  */
 @Service
-//@RocketMQMessageListener(topic = "${demo.rocketmq.stringRequestTopic}", consumerGroup = "${demo.rocketmq.stringRequestConsumer}", selectorExpression = "${demo.rocketmq.tag}")
+@RocketMQMessageListener(topic = "stringRequestTopic", consumerGroup = "${demo.rocketmq.stringRequestConsumer}", selectorExpression = "${demo.rocketmq.tag}")
 public class StringConsumerWithReplyString implements RocketMQReplyListener<String, String> {
 
     @Override
     public String onMessage(String message) {
         System.out.printf("------- StringConsumerWithReplyString received: %s \n", message);
-        return "reply string";
+        return "已收到该消息处理成功,消息内容: "+message;
     }
 }

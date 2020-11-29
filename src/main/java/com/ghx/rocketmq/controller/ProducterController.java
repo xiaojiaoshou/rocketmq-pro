@@ -93,7 +93,7 @@ public class ProducterController {
 
 
     /**
-     * 发送json
+     * 发送异步消息
      * @param user
      * @return
      */
@@ -116,6 +116,20 @@ public class ProducterController {
         });
 
         return "发送消息成功";
+    }
+
+    /**
+     * 请求应答
+     * @return
+     */
+    @RequestMapping("/sendAndReceive")
+    public String sendAndReceive(String message) {
+        String stringRequestTopic = mqPropertiesConfig.getStringRequestTopic();
+
+        // Send request in sync mode and receive a reply of String type.
+        String replyString = rocketMQTemplate.sendAndReceive(stringRequestTopic, message, String.class);
+        System.out.printf("send %s and receive %s %n", "request string", replyString);
+        return replyString;
     }
 
 
