@@ -133,4 +133,25 @@ public class ProducterController {
     }
 
 
+    /**
+     * 顺序消息(分区类顺序消息)
+     * @return
+     */
+    @RequestMapping("/syncSendOrderly")
+    public String syncSendOrderly(String message) {
+        String stringOrderlyTopic = mqPropertiesConfig.getStringOrderlyTopic();
+
+        // Send request in sync mode and receive a reply of String type.
+
+        for (int i = 1; i < 12; i++) {
+            Message<String> message1 = MessageBuilder.withPayload(i + " " + message)
+                    .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON_VALUE).build();
+            SendResult sendResult = rocketMQTemplate.syncSendOrderly(stringOrderlyTopic, message1, String.valueOf(i));
+            System.out.printf("send %s and orderBy %s %n", "request string", message);
+        }
+
+        return "顺序消息发送完成";
+    }
+
+
 }

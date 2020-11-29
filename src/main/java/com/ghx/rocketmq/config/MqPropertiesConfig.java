@@ -35,4 +35,7 @@ public class MqPropertiesConfig {
     private String objectRequestTopic;
     @Value("${demo.rocketmq.genericRequestTopic}")
     private String genericRequestTopic;
+
+    @Value("${demo.rocketmq.stringOrderlyTopic}")
+    private String stringOrderlyTopic;
 }
