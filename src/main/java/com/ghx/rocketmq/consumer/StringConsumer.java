@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 @RocketMQMessageListener(topic = "${demo.rocketmq.topic}", consumerGroup = "string_consumer", selectorExpression = "*")
 public class StringConsumer implements RocketMQListener<String>, RocketMQPushConsumerLifecycleListener {
 
-    int count = 0;
+    volatile int count = 0;
 
     @Override
     public void onMessage(String message) {
@@ -42,6 +42,7 @@ public class StringConsumer implements RocketMQListener<String>, RocketMQPushCon
             count++;
             System.out.println("---------消费端总共处理消息数量count=" + count);
         }
+        System.out.println("---------消费端总共处理消息数量count=" + count);
     }
 
 
