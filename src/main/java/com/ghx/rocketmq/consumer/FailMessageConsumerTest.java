@@ -24,6 +24,9 @@ import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.apache.rocketmq.spring.core.RocketMQPushConsumerLifecycleListener;
 import org.springframework.stereotype.Service;
 
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -40,12 +43,14 @@ public class FailMessageConsumerTest implements RocketMQListener<MessageExt>, Ro
     public void onMessage(MessageExt message) {
 
         int msg = Integer.parseInt(new String(message.getBody()));
-        String ipaddress = message.getBornHostString();
+        InetSocketAddress storeHost = (InetSocketAddress) message.getStoreHost();
+        InetAddress address = storeHost.getAddress();
+        String hostAddress = address.getHostAddress();
         System.out.printf("------- MessageExtConsumer received message, msgId: %s, body:%s \n", message.getMsgId(), msg);
         // throw new RuntimeException("故意的异常");
         synchronized (FailMessageConsumerTest.class) {
             set.add(msg);
-            broker.add(ipaddress);
+            broker.add(hostAddress);
             System.out.println("---------消费端总共处理消息数量set.size:" + set.size() + "brokerToString: " + broker.toString() + "message:======" + message);
         }
 
@@ -55,7 +60,8 @@ public class FailMessageConsumerTest implements RocketMQListener<MessageExt>, Ro
     @Override
     public void prepareStart(DefaultMQPushConsumer consumer) {
         // set consumer consume message from now
-//        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_TIMESTAMP);
-//        consumer.setConsumeTimestamp(UtilAll.timeMillisToHumanString3(System.currentTimeMillis()));
+//        consumer.setPostSubscriptionWhenPull(true);
+//        consumer.setUnitMode(true);
+
     }
 }

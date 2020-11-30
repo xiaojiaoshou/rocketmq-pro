@@ -163,9 +163,9 @@ public class ProducterController {
      * @return
      */
     @RequestMapping(value = "/sendtest")
-    public String sendtest(String message) {
+    public String sendtest(String message,int size) {
         int count = 0;
-        for (int i = 0; i < 5000; i++) {
+        for (int i = 0; i < size; i++) {
             count++;
             // Send string
             SendResult sendResult = rocketMQTemplate.syncSend("test", i);
