@@ -30,10 +30,10 @@ import java.util.TreeSet;
  * StringConsumer
  */
 @Service
-@RocketMQMessageListener(topic = "test", consumerGroup = "string_consumer", selectorExpression = "*")
+@RocketMQMessageListener(topic = "test", consumerGroup = "string_consumer2", selectorExpression = "*")
 public class BreakDownConsumerTest implements RocketMQListener<String>, RocketMQPushConsumerLifecycleListener {
 
-    volatile int count = 0;
+     int count = 0;
     Set<Integer> set = new TreeSet<>();
 
     @Override
@@ -46,9 +46,9 @@ public class BreakDownConsumerTest implements RocketMQListener<String>, RocketMQ
             count++;
 
             set.add(Integer.valueOf(message));
-            System.out.println("---------消费端总共处理消息数量count=" + count + "======" + set.size());
+            System.out.println("---------消费端总共处理消息数量count=" + count + "message:======" + message);
         }
-        System.out.println("---------消费端总共处理消息数量count=" + count + "======" + set.size());
+        System.out.println("---------消费端总共处理消息数量count=" + count + "message:======" + message);
     }
 
 
