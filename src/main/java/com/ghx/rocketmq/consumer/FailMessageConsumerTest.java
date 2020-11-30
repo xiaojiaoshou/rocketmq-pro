@@ -18,6 +18,7 @@
 package com.ghx.rocketmq.consumer;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.apache.rocketmq.spring.core.RocketMQPushConsumerLifecycleListener;
@@ -27,35 +28,34 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * StringConsumer
+ * MessageExtConsumer, consume listener impl class.
  */
-//@Service
-//@RocketMQMessageListener(topic = "test", consumerGroup = "string_consumer2", selectorExpression = "*")
-public class BreakDownConsumerTest implements RocketMQListener<String>, RocketMQPushConsumerLifecycleListener {
-
-    int count = 0;
+@Service
+@RocketMQMessageListener(topic = "test", consumerGroup = "string_consumer2", selectorExpression = "*")
+public class FailMessageConsumerTest implements RocketMQListener<MessageExt>, RocketMQPushConsumerLifecycleListener {
     Set<Integer> set = new TreeSet<>();
+    Set<String> broker = new TreeSet<>();
 
     @Override
-    public void onMessage(String message) {
+    public void onMessage(MessageExt message) {
 
-        System.out.printf("------- StringConsumer received: %s \n", message);
-
+        int msg = Integer.parseInt(new String(message.getBody()));
+        String ipaddress = message.getBornHostString();
+        System.out.printf("------- MessageExtConsumer received message, msgId: %s, body:%s \n", message.getMsgId(), msg);
         // throw new RuntimeException("故意的异常");
-        synchronized (BreakDownConsumerTest.class) {
-            count++;
-
-            set.add(Integer.valueOf(message));
-            System.out.println("---------消费端总共处理消息数量count=" + count + "set.size(): " + set.size() + "message:======" + message);
+        synchronized (FailMessageConsumerTest.class) {
+            set.add(msg);
+            broker.add(ipaddress);
+            System.out.println("---------消费端总共处理消息数量set.size:" + set.size() + "brokerToString: " + broker.toString() + "message:======" + message);
         }
-        System.out.println("---------消费端总共处理消息数量count=" + count + "set.size(): " + set.size() + "message:======" + message);
-    }
 
+
+    }
 
     @Override
     public void prepareStart(DefaultMQPushConsumer consumer) {
-        // messageDelayLevel=1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h，分别代表延迟level1-level18
-        // 默认从 3开始 也就是  10s/30s/1m
-        consumer.setMaxReconsumeTimes(2);
+        // set consumer consume message from now
+//        consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_TIMESTAMP);
+//        consumer.setConsumeTimestamp(UtilAll.timeMillisToHumanString3(System.currentTimeMillis()));
     }
 }
