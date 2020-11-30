@@ -168,7 +168,7 @@ public class ProducterController {
         for (int i = 0; i < 5000; i++) {
             count++;
             // Send string
-            SendResult sendResult = rocketMQTemplate.syncSend(mqPropertiesConfig.getSpringTopic(), message);
+            SendResult sendResult = rocketMQTemplate.syncSend("test", i);
             System.out.printf("syncSend1 to topic %s sendResult=%s %n", mqPropertiesConfig.getSpringTopic(), sendResult);
         }
 
