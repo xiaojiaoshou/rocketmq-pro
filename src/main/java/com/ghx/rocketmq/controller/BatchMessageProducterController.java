@@ -42,4 +42,8 @@ public class BatchMessageProducterController {
 
         System.out.printf("--- Batch messages send result :" + sr);
     }
+
+
+    // DefaultMQProducer  defaultMQProducer=new DefaultMQProducer();
+    //        defaultMQProducer.queryMessage()
 }
