@@ -42,7 +42,7 @@ public class StringConsumer implements RocketMQListener<String>, RocketMQPushCon
             count++;
             System.out.println("---------消费端总共处理消息数量count=" + count);
         }
-        System.out.println("---------消费端总共处理消息数量count=" + count);
+       // System.out.println("---------消费端总共处理消息数量count=" + count);
     }
 
 
