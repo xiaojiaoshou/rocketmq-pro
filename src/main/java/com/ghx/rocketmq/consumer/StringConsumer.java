@@ -29,20 +29,13 @@ import org.springframework.stereotype.Service;
 @Service
 @RocketMQMessageListener(topic = "${demo.rocketmq.topic}", consumerGroup = "string_consumer", selectorExpression = "*")
 public class StringConsumer implements RocketMQListener<String>, RocketMQPushConsumerLifecycleListener {
-
-    volatile int count = 0;
-
+    
     @Override
     public void onMessage(String message) {
 
         System.out.printf("------- StringConsumer received: %s \n", message);
 
         // throw new RuntimeException("故意的异常");
-        synchronized (StringConsumer.class) {
-            count++;
-            System.out.println("---------消费端总共处理消息数量count=" + count);
-        }
-       // System.out.println("---------消费端总共处理消息数量count=" + count);
     }
 
 
