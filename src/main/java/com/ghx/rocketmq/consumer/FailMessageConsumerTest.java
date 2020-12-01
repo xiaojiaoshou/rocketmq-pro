@@ -46,7 +46,7 @@ public class FailMessageConsumerTest implements RocketMQListener<MessageExt>, Ro
         InetSocketAddress storeHost = (InetSocketAddress) message.getStoreHost();
         InetAddress address = storeHost.getAddress();
         String hostAddress = address.getHostAddress();
-        System.out.printf("------- MessageExtConsumer received message, msgId: %s, body:%s \n", message.getMsgId(), msg);
+        System.out.printf("消费端------- MessageExtConsumer received message, msgId: %s, body:%s \n", message.getMsgId(), msg);
         // throw new RuntimeException("故意的异常");
         synchronized (FailMessageConsumerTest.class) {
             set.add(msg);

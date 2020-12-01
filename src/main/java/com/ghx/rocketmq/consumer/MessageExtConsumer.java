@@ -34,7 +34,7 @@ import org.springframework.stereotype.Service;
 public class MessageExtConsumer implements RocketMQListener<MessageExt>, RocketMQPushConsumerLifecycleListener {
     @Override
     public void onMessage(MessageExt message) {
-        System.out.printf("------- MessageExtConsumer received message, msgId: %s, body:%s \n", message.getMsgId(), new String(message.getBody()));
+        System.out.printf("消费端:------- MessageExtConsumer received message, msgId: %s, body:%s \n", message.getMsgId(), new String(message.getBody()));
     }
 
     @Override

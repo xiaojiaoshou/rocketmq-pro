@@ -30,7 +30,7 @@ public class StringConsumerWithReplyString implements RocketMQReplyListener<Stri
 
     @Override
     public String onMessage(String message) {
-        System.out.printf("------- StringConsumerWithReplyString received: %s \n", message);
+        System.out.printf("消费端------- StringConsumerWithReplyString received: %s \n", message);
         return "已收到该消息处理成功,消息内容: "+message;
     }
 }

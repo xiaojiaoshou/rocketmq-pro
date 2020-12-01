@@ -40,7 +40,7 @@ public class BatchMessageProducterController {
 
         SendResult sr = rocketMQTemplate.syncSend(mqPropertiesConfig.getSpringTopic(), msgs, 60000);
 
-        System.out.printf("--- Batch messages send result :" + sr);
+        System.out.printf("生产端: Batch messages send result :" + sr);
     }
 
 

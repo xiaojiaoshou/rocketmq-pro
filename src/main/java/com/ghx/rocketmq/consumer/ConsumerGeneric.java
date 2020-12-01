@@ -34,7 +34,7 @@ public class ConsumerGeneric implements RocketMQListener<String>, RocketMQPushCo
 
     @Override
     public void onMessage(String message) {
-        System.out.printf("------- ConsumerWithReplyGeneric received: %s \n", message);
+        System.out.printf("消费端------- ConsumerWithReplyGeneric received: %s \n", message);
     }
 
     @Override

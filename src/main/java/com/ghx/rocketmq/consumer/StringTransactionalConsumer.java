@@ -29,6 +29,6 @@ import org.springframework.stereotype.Service;
 public class StringTransactionalConsumer implements RocketMQListener<String> {
     @Override
     public void onMessage(String message) {
-        System.out.printf("------- StringTransactionalConsumer received: %s \n", message);
+        System.out.printf("消费端------- StringTransactionalConsumer received: %s \n", message);
     }
 }

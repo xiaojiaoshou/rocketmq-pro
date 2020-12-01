@@ -19,7 +19,7 @@ public class DeadLetterMessage implements RocketMQListener<String>, RocketMQPush
     @Override
     public void onMessage(String message) {
 
-        System.out.printf("------- StringConsumer received: %s \n", message);
+        System.out.printf("消费端------- StringConsumer received: %s \n", message);
 
        // throw new RuntimeException("故意的异常");
     }

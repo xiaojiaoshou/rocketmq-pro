@@ -31,6 +31,6 @@ public class UserConsumer implements RocketMQListener<User> {
     @Override
     public void onMessage(User message) {
 
-        System.out.printf("######## user_consumer received: %s ; age: %s ; name: %s \n", message, message.getAge(), message.getName());
+        System.out.printf("消费端------- user_consumer received: %s ; age: %s ; name: %s \n", message, message.getAge(), message.getName());
     }
 }

@@ -44,7 +44,7 @@ public class ProducterController {
     public SendResult sendString(String message) {
         // Send string
         SendResult sendResult = rocketMQTemplate.syncSend(mqPropertiesConfig.getSpringTopic(), message);
-        System.out.printf("syncSend1 to topic %s sendResult=%s %n", mqPropertiesConfig.getSpringTopic(), sendResult);
+        System.out.printf("生产端:syncSend to topic %s sendResult=%s %n", mqPropertiesConfig.getSpringTopic(), sendResult);
         return sendResult;
     }
 
@@ -57,7 +57,7 @@ public class ProducterController {
     public SendResult sendSpringString(String message) {
         // Send string with spring Message
         SendResult sendResult = rocketMQTemplate.syncSend(mqPropertiesConfig.getSpringTopic(), MessageBuilder.withPayload(message).build());
-        System.out.printf("syncSend2 to topic %s sendResult=%s %n", mqPropertiesConfig.getSpringTopic(), sendResult);
+        System.out.printf("生产端:syncSend to topic %s sendResult=%s %n", mqPropertiesConfig.getSpringTopic(), sendResult);
         return sendResult;
     }
 
@@ -71,9 +71,9 @@ public class ProducterController {
         // Send message with special tag
         // tag0 will not be consumer-selected
         rocketMQTemplate.convertAndSend(mqPropertiesConfig.getMsgExtTopic() + ":tag0", "I'm from tag0");
-        System.out.printf("syncSend topic %s tag %s %n", mqPropertiesConfig.getMsgExtTopic(), "tag0");
+        System.out.printf("生产端:syncSend topic %s tag %s %n", mqPropertiesConfig.getMsgExtTopic(), "tag0");
         rocketMQTemplate.convertAndSend(mqPropertiesConfig.getMsgExtTopic() + ":tagA", "I'm from tagA");
-        System.out.printf("syncSend topic %s tag %s %n", mqPropertiesConfig.getMsgExtTopic(), "tagA");
+        System.out.printf("生产端:syncSend topic %s tag %s %n", mqPropertiesConfig.getMsgExtTopic(), "tagA");
         return null;
     }
 
@@ -87,7 +87,7 @@ public class ProducterController {
         String userTopic = mqPropertiesConfig.getUserTopic();
         SendResult sendResult = rocketMQTemplate.syncSend(userTopic, MessageBuilder.withPayload(
                 user).setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON_VALUE).build());
-        System.out.printf("syncSend1 to topic %s sendResult=%s %n", userTopic, sendResult);
+        System.out.printf("生产端:syncSend to topic %s sendResult=%s %n", userTopic, sendResult);
         return sendResult;
     }
 
@@ -105,13 +105,13 @@ public class ProducterController {
         rocketMQTemplate.asyncSend(userTopic, message, new SendCallback() {
             @Override
             public void onSuccess(SendResult sendResult) {
-                System.out.printf("syncSend1 to topic sendResult=%s %n", sendResult);
+                System.out.printf("生产端:asyncSend to topic sendResult=%s %n", sendResult);
             }
 
             @Override
             public void onException(Throwable e) {
                 e.printStackTrace();
-                System.out.printf("syncSend1 to topic fail,e=%s %n", e);
+                System.out.printf("生产端:asyncSend to topic fail,e=%s %n", e);
             }
         });
 
@@ -128,7 +128,7 @@ public class ProducterController {
 
         // Send request in sync mode and receive a reply of String type.
         String replyString = rocketMQTemplate.sendAndReceive(stringRequestTopic, message, String.class);
-        System.out.printf("send %s and receive %s %n", "request string", replyString);
+        System.out.printf("生产端:send %s and receive %s %n", "request string", replyString);
         return replyString;
     }
 
@@ -147,7 +147,7 @@ public class ProducterController {
             Message<String> message1 = MessageBuilder.withPayload(i + " " + message)
                     .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON_VALUE).build();
             SendResult sendResult = rocketMQTemplate.syncSendOrderly(stringOrderlyTopic, message1, String.valueOf(i));
-            System.out.printf("send %s and orderBy %s %n", "request string", message);
+            System.out.printf("生产端:send %s and orderBy %s %n", "request string", message);
         }
 
         return "顺序消息发送完成";
@@ -169,7 +169,7 @@ public class ProducterController {
             count++;
             // Send string
             SendResult sendResult = rocketMQTemplate.syncSend("test", i);
-            System.out.printf("syncSend1 to topic %s sendResult=%s %n", mqPropertiesConfig.getSpringTopic(), sendResult);
+            System.out.printf("生产端:syncSend to topic %s sendResult=%s %n", mqPropertiesConfig.getSpringTopic(), sendResult);
         }
 
         System.out.println("生产端消息发送完成,总共发送消息数量count=" + count);

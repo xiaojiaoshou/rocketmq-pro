@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 public class ConsumerWithReplyGeneric implements RocketMQReplyListener<String, ProductWithPayload<String>> {
     @Override
     public ProductWithPayload<String> onMessage(String message) {
-        System.out.printf("------- ConsumerWithReplyGeneric received: %s \n", message);
+        System.out.printf("消费端------- ConsumerWithReplyGeneric received: %s \n", message);
         return new ProductWithPayload<String>("replyProductName", "product payload");
     }
 }

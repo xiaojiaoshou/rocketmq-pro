@@ -35,7 +35,7 @@ public class MessageOrderByMessageConsumer implements RocketMQListener<MessageEx
     public void onMessage(MessageExt message) {
 
         String messageStr = new String(message.getBody());
-        System.out.printf("------- MessageExtConsumer received message, queueId: %s,msgId: %s, body:%s \n", message.getQueueId(), message.getMsgId(), messageStr);
+        System.out.printf("消费端:------- MessageExtConsumer received message, queueId: %s,msgId: %s, body:%s \n", message.getQueueId(), message.getMsgId(), messageStr);
         if (messageStr.contains("8")) {
             System.out.println("抛出异常的消息,该分区后的消息不会再消费  " + messageStr);
 

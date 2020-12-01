@@ -36,7 +36,7 @@ public class DeadLetterMessageTest {
     public SendResult sendString(String message) {
         // Send string
         SendResult sendResult = rocketMQTemplate.syncSend("deadLetter", message);
-        System.out.printf("syncSend1 to topic %s sendResult=%s %n", "deadLetter", sendResult);
+        System.out.printf("生产端:syncSend to topic %s sendResult=%s %n", "deadLetter", sendResult);
         return sendResult;
     }
 

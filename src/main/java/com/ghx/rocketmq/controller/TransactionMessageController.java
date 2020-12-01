@@ -41,7 +41,7 @@ public class TransactionMessageController {
                         setHeader(RocketMQHeaders.TRANSACTION_ID, "KEY_" + i).build();
                 SendResult sendResult = rocketMQTemplate.sendMessageInTransaction(
                         mqPropertiesConfig.getSpringTransTopic(), msg, null);
-                System.out.printf("------ExtRocketMQTemplate send Transactional msg body = %s , sendResult=%s %n",
+                System.out.printf("生产端提交半消息成功:ExtRocketMQTemplate send Transactional msg body = %s , sendResult=%s %n",
                         msg.getPayload(), sendResult.getSendStatus());
 
 
@@ -61,7 +61,7 @@ public class TransactionMessageController {
         @Override
         public RocketMQLocalTransactionState executeLocalTransaction(Message msg, Object arg) {
             String transId = (String) msg.getHeaders().get(RocketMQHeaders.TRANSACTION_ID);
-            System.out.printf("#### executeLocalTransaction is executed, msgTransactionId=%s %n",
+            System.out.printf(" executeLocalTransaction is executed, msgTransactionId=%s %n",
                     transId);
             int value = transactionIndex.getAndIncrement();
             int status = value % 3;
@@ -103,7 +103,7 @@ public class TransactionMessageController {
                         break;
                 }
             }
-            System.out.printf("------ !!! checkLocalTransaction is executed once," +
+            System.out.printf("事务消息回查接口:------ !!! checkLocalTransaction is executed once," +
                             " msgTransactionId=%s, TransactionState=%s status=%s %n",
                     transId, retState, status);
             return retState;
