@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RocketMQMessageListener(topic = "${demo.rocketmq.topic}", consumerGroup = "string_consumer", selectorExpression = "*")
 public class StringConsumer implements RocketMQListener<String>, RocketMQPushConsumerLifecycleListener {
-    
+
     @Override
     public void onMessage(String message) {
 
