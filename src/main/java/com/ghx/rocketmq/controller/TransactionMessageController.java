@@ -106,7 +106,8 @@ public class TransactionMessageController {
             System.out.printf("事务消息回查接口:------ !!! checkLocalTransaction is executed once," +
                             " msgTransactionId=%s, TransactionState=%s status=%s %n",
                     transId, retState, status);
-            return retState;
+            // return retState;
+            return RocketMQLocalTransactionState.COMMIT;
         }
     }
 }
