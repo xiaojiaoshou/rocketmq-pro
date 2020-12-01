@@ -21,7 +21,7 @@ public class DeadLetterMessage implements RocketMQListener<String>, RocketMQPush
 
         System.out.printf("消费端------- StringConsumer received: %s \n", message);
 
-       // throw new RuntimeException("故意的异常");
+        throw new RuntimeException("故意的异常");
     }
 
 
